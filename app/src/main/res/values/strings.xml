@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Instagram Access</string>
+    <string name="start_btn">Старт</string>
+    <string name="service_label">Сервис для доступа к Instagram</string>
+    <string name="accessibility_service_description">Для получения данных из Instagram, нажмите ок.</string>
+    <string name="accessibility_service_id">ru.developersementsov.instagramaccess/.InstagramAccessibilityService</string>
+
+    <string name="instagram_username">com.instagram.android:id/username</string>
+    <string name="instagram_title_username">com.instagram.android:id/title_view</string>
+    <string name="instagram_current_email">com.instagram.android:id/current_email</string>
+    <string name="instagram_phone_number">com.instagram.android:id/phone_number</string>
+</resources>
