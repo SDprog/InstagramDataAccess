@@ -12,44 +12,44 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InstagramAccessibilityService extends AccessibilityService {
-    private final String TAG = "My logs";
+    public static final String TAG = "My logs Service";
+
 
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
-        Log.d(TAG, "service running");
         Log.d(TAG, "onServiceConnected");
-//        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
-//        info.flags = AccessibilityServiceInfo.DEFAULT |
-//                AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS |
-//                AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
-//
-//
-//        info.eventTypes = AccessibilityEvent.TYPE_VIEW_CLICKED;
-////        info.eventTypes = AccessibilityEvent.TYPE_VIEW_SCROLLED;
-////        info.eventTypes = AccessibilityEvent.TYPE_VIEW_SELECTED;
-////        info.eventTypes = AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED;
-////        info.eventTypes = AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED;
-////        info.eventTypes = AccessibilityEvent.TYPE_VIEW_FOCUSED;
-//
-//        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
-//        info.packageNames = new String[]{"com.instagram.android"};
-//        setServiceInfo(info);
         startApp();
-
-
     }
 
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        myObserver(event);
 
-        //getText();
-        debugClick(event);
+    }
 
+    private boolean mySearch(AccessibilityNodeInfo nodeInfo) {
+        List<AccessibilityNodeInfo> listProfile = nodeInfo.findAccessibilityNodeInfosByViewId("com.instagram.android:id/profile_tab");
+        if (listProfile.size() > 0) {
+            for (AccessibilityNodeInfo node : listProfile) {
+                Log.d(TAG, "profileTab " + node.getViewIdResourceName());
+                node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+
+                List<AccessibilityNodeInfo> listUserName = nodeInfo.findAccessibilityNodeInfosByViewId("com.instagram.android:id/title_view");
+                if (listUserName.size() > 0) {
+                    for (AccessibilityNodeInfo nodeUser : listUserName) {
+                        String accountName = nodeUser.getText().toString();
+                        Log.d(TAG, "User name: " + nodeUser.getText() + ", accountName: " + accountName);
+                        //parent.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+            }}}
+            return true;
+        } else
+            return false;
     }
 
 
@@ -59,20 +59,13 @@ public class InstagramAccessibilityService extends AccessibilityService {
 
     }
 
-    private void debugClick(AccessibilityEvent event) {
-//    Log.d(TAG, "debugClick event " + event.toString());
-//    Log.d(TAG, "debugClick getItemCount " + event.getItemCount());
-//    Log.d(TAG, "debugClick getSource " + event.getSource());
-//    Log.d(TAG, "debugClick getWindowId " + event.getWindowId());
-//    Log.d(TAG, "debugClick getCurrentItemIndex " + event.getCurrentItemIndex());
-//    Log.d(TAG, "debugClick getContentChangeTypes " + event.getContentChangeTypes());
-//    Log.d(TAG, "*******************************************************************");
-        if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_CLICKED) {
+    private void myObserver(AccessibilityEvent event) {
+        if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             AccessibilityNodeInfo nodeInfo = event.getSource();
-//      Log.d(TAG, "nodeInfo: " + nodeInfo.toString());
             if (nodeInfo == null) {
                 return;
             }
+            mySearch(nodeInfo);
             nodeInfo.refresh();
             Log.d(TAG, "ClassName:" + nodeInfo.getClassName() +
                     " Text:" + nodeInfo.getText() +
@@ -81,15 +74,6 @@ public class InstagramAccessibilityService extends AccessibilityService {
         }
     }
 
-
-//    public void getText() {
-//            AccessibilityNodeInfo nodeInfo = new AccessibilityNodeInfo();
-//            nodeInfo.findAccessibilityNodeInfosByViewId(String.valueOf(R.string.instagram_username));
-//            nodeInfo.getText();
-//        Log.d(TAG, "Text:" + nodeInfo.getText());
-//        }
-
-
     private void startApp() {
         Log.d(TAG, "startApp");
         // Указываем пакет нужного приложения
@@ -97,6 +81,6 @@ public class InstagramAccessibilityService extends AccessibilityService {
         // Запуск из нужного места без предыстории приложения
         launchIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(launchIntent);
-
     }
+
 }
