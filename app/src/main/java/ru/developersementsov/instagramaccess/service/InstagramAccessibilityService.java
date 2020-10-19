@@ -41,10 +41,6 @@ public class InstagramAccessibilityService extends AccessibilityService {
             }
             mySearch(nodeInfo);
             nodeInfo.refresh();
-//            Log.d(TAG, "ClassName:" + nodeInfo.getClassName() +
-//                    " Text:" + nodeInfo.getText() +
-//                    " ViewIdResourceName:" + nodeInfo.getViewIdResourceName() +
-//                    " isClickable:" + nodeInfo.isClickable());
         }
     }
 
@@ -52,19 +48,18 @@ public class InstagramAccessibilityService extends AccessibilityService {
         List<AccessibilityNodeInfo> listProfile = nodeInfo.findAccessibilityNodeInfosByViewId("com.instagram.android:id/profile_tab");
         if (listProfile.size() > 0) {
             for (AccessibilityNodeInfo node : listProfile) {
-               // Log.d(TAG, "profileTab " + node.getViewIdResourceName());
                 node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
                 Log.d(TAG, "profileTab CLICK");
                 List<AccessibilityNodeInfo> listUserName = nodeInfo.findAccessibilityNodeInfosByViewId("com.instagram.android:id/title_view");
                 if (listUserName.size() > 0) {
                     for (AccessibilityNodeInfo nodeUser : listUserName) {
                         String accountName = nodeUser.getText().toString();
-                       // Log.d(TAG, "accountName: " + accountName);
                         Account account = new Account(accountName);
-                       // Log.d(TAG, "New account: " + account.getAccountName());
                         AccountRepository accountRepository = new AccountRepository(getApplication());
                         accountRepository.insert(account);
                         Log.d(TAG, "Сделана запись в БД: " + account.getAccountName());
+                        Toast.makeText(this, "Сделана запись в БД. Account name: " + account.getAccountName(),
+                                Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -74,10 +69,8 @@ public class InstagramAccessibilityService extends AccessibilityService {
     }
 
     private void startApp() {
-        // Указываем пакет нужного приложения
         Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.instagram.android");
         if (launchIntent != null) {
-            // Запуск из нужного места без предыстории приложения
             launchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(launchIntent);
             Log.d(TAG, "startApp");
@@ -85,7 +78,6 @@ public class InstagramAccessibilityService extends AccessibilityService {
             Toast.makeText(this, "Instagram на устройстве не установлен!",
                     Toast.LENGTH_LONG).show();
             Log.d(TAG, "Instagram на устройстве не установлен!");
-            onInterrupt();
         }
     }
 }

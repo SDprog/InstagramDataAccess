@@ -2,7 +2,7 @@
     <string name="app_name">Instagram Access</string>
     <string name="start_btn">Старт</string>
     <string name="service_label">Сервис для доступа к Instagram</string>
-    <string name="accessibility_service_description">Для получения данных из Instagram, нужно включить "Сервис доступа к Instagram",
+    <string name="accessibility_service_description">Для получения данных из Instagram, нужно включить этот сервис,
         а затем согласиться на предоставление доступа к данным телефона.</string>
     <string name="accessibility_service_id">ru.developersementsov.instagramaccess/.InstagramAccessibilityService</string>
 

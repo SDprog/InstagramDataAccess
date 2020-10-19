@@ -17,11 +17,8 @@ public class Account {
         this.accountName = accountName;
     }
 
+    @NonNull
     public String getAccountName() {
         return this.accountName;
-    }
-
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
     }
 }

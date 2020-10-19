@@ -20,8 +20,8 @@ public class MyDialogFragment extends DialogFragment {
         String buttonCancel = "Cancel";
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(title);  // заголовок
-        builder.setMessage(message); // сообщение
+        builder.setTitle(title);
+        builder.setMessage(message);
         builder.setPositiveButton(buttonOk, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
