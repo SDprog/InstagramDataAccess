@@ -1,4 +1,4 @@
-package ru.developersementsov.instagramaccess;
+package ru.developersementsov.instagramaccess.ui;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

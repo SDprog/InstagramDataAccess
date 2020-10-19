@@ -19,7 +19,7 @@
         </activity>
 
         <service
-            android:name=".InstagramAccessibilityService"
+            android:name=".service.InstagramAccessibilityService"
             android:label="@string/service_label"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
